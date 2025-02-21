@@ -1,4 +1,12 @@
-import { DndContext, DragEndEvent, PointerSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  TouchSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React from "react";
@@ -13,6 +21,7 @@ const DraggableCell: React.FC<DraggableCellProps> = ({ id }) => {
   const style = {
     transform: CSS.Transform.toString(transform) || undefined,
     transition: transition || undefined,
+    touchAction: "none", // Prevents scrolling while dragging
   };
 
   return (
@@ -32,6 +41,9 @@ const HeaderGroup = ({ items, setItems }: { items: string[]; setItems: (items: s
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 100, tolerance: 5 }, // Delay prevents accidental drags
     })
   );
 
