@@ -1,0 +1,15 @@
+{
+  "extends": ["eslint:recommended", "next/core-web-vitals", "next/typescript", "prettier"],
+  "rules": {
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-undef": "off",
+    "no-alert": "error",
+    "no-debugger": "error",
+    "react-hooks/exhaustive-deps": "error"
+  }
+}
