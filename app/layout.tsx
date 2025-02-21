@@ -26,12 +26,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased 
-        [background:radial-gradient(ellipse_100%_40%_at_top_center,_#291156,_#291156_60%,_transparent_60%),_#17151e] 
-        bg-no-repeat 
-        [background-size:100%_50%]`}
+         bg-[#17151e] bg-no-repeat 
+    [background-image:radial-gradient(ellipse_100%_60%_at_top_center,_#291156,_#291156_60%,_transparent_60%)] 
+    [background-size:100%_50%] [background-position:top_center]`}
       >
         <TopNav />
-        {children}
+        <div className="flex flex-col justify-center items-center h-screen">{children}</div>
       </body>
     </html>
   );
