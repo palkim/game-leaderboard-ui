@@ -1,7 +1,7 @@
+import TopNav from "@ui/layout/topnav";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import TopNav from "@ui/layout/topnav";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,7 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased 
+        [background:radial-gradient(ellipse_100%_40%_at_top_center,_#291156,_#291156_60%,_transparent_60%),_#17151e] 
+        bg-no-repeat 
+        [background-size:100%_50%]`}
       >
         <TopNav />
         {children}

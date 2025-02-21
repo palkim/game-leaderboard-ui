@@ -18,7 +18,7 @@ const DraggableCell: React.FC<DraggableCellProps> = ({ id }) => {
   return (
     <div
       ref={setNodeRef}
-      className="p-3 bg-[#1b172a] text-gray-300 cursor-grab flex items-start justify-start rounded-md shadow-md w-64"
+      className="p-3 bg-[#1b172a] text-gray-300 cursor-grab flex items-start justify-start rounded-md shadow-md ml-5 w-full"
       style={style}
       {...listeners}
       {...attributes}
@@ -49,7 +49,7 @@ const HeaderGroup = ({ items, setItems }: { items: string[]; setItems: (items: s
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-        <div className="flex gap-2 p-3 bg-[#1b172a] border border-gray-700 rounded-md shadow-lg">
+        <div className="flex gap-2 pl-3 pr-3 bg-[#1b172a] rounded-md shadow-lg justify-between">
           {items.map((id) => (
             <DraggableCell key={id} id={id} />
           ))}

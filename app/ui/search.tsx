@@ -19,13 +19,13 @@ export default function Search({
   }, 300);
 
   return (
-    <div className="relative flex flex-1 h-8 w-[300px] shadow-md">
+    <div className="relative flex flex-1 h-8 w-full shadow-md ">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
         id="search"
-        className="w-[300px] py-[9px] pl-10 outline-2"
+        className="w-full py-[9px] pl-10 outline-2 bg-[#241e3e] border border-[#332a65] rounded-md"
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
@@ -33,7 +33,7 @@ export default function Search({
         defaultValue={searchParams.get("query")?.toString()}
       />
       <MagnifyingGlassIcon
-        style={{ color: "#368FBE" }}
+        style={{ color: "#ffff" }}
         className="absolute left-3 top-1/2 h-4 -translate-y-1/2 peer-focus:text-gray-900"
       />
     </div>

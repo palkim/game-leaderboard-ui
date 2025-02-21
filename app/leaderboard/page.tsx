@@ -129,15 +129,15 @@ const Leaderboard = () => {
   }, [query]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-[#17151e]">
-      <div className="text-2xl font-bold mb-4 mt-4">Leaderboard</div>
-      <div className="flex flex-row gap-2 mb-4">
+    <div className="flex flex-col justify-center items-center h-screen">
+      <div className="text-2xl font-bold mb-4 mt-4 text-white">Leaderboard</div>
+      <div className="flex flex-row gap-2 mb-4 ">
         <Search placeholder="Search" setQuery={setQuery} />
         <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={() => setRenderGroups(!renderGroups)}>
           Group by country
         </button>
       </div>
-      <div className="flex-1 flex flex-col gap-2 overflow-auto">
+      <div className="flex-1 flex flex-col gap-2 overflow-auto mb-10">
         <HeaderGroup items={items} setItems={setItems} />
         {renderGroups
           ? groupedData.map((group) => (
