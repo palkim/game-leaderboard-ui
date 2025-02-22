@@ -25,7 +25,7 @@ export default function Search({
       </label>
       <input
         id="search"
-        className="w-full py-[9px] pl-10 outline-2 bg-[#241e3e] border border-[#332a65] rounded-md"
+        className="w-full py-[9px] pl-10 outline-2 bg-[#241e3e] border border-[#332a65] rounded-md text-white"
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
