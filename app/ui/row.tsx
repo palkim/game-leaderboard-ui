@@ -60,7 +60,7 @@ const TableRow: React.FC<TableRowProps> = ({
               className={`flex-1 flex items-center text-left pl-4 text-xs xs:text-sm sm:text-base md:text-base lg:text-base  
               ${getTextStyles(key)}`}
             >
-              {key === "Country" && countryCode ? (
+              {key === "Country" && countryCode && !isGrouped ? (
                 <div className="flex items-center gap-2 md:pl-4 lg:pl-4">
                   <Flag
                     code={countryCode}
