@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
@@ -12,8 +11,6 @@ export default function Search({
   placeholder: string;
   setQuery: Dispatch<SetStateAction<string | undefined>>;
 }>) {
-  const searchParams = useSearchParams();
-
   const handleSearch = useDebouncedCallback((term: string) => {
     setQuery(term);
   }, 300);
@@ -30,7 +27,6 @@ export default function Search({
           handleSearch(e.target.value);
         }}
         placeholder={placeholder}
-        defaultValue={searchParams.get("query")?.toString()}
       />
       <FaSearch
         style={{ color: "#ffff" }}
