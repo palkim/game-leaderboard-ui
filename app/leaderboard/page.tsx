@@ -237,7 +237,7 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="w-[70%] h-full">
+    <div className="w-[90%] xs:w-[90%] sm:w-[90%] md:w-[80%] lg:w-[70%] h-full overflow-y-auto">
       <div className="text-2xl font-bold mb-4 text-white text-center mt-10">Leaderboard</div>
       <div className="flex flex-row gap-2 mb-10 justify-between w-full">
         <Search placeholder="Search" setQuery={setQuery} />

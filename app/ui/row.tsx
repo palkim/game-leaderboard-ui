@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import Flag from "react-world-flags";
 
 interface TableRowProps {
@@ -37,24 +36,28 @@ const TableRow: React.FC<TableRowProps> = ({
         [clip-path:polygon(2.5rem_0,100%_0,100%_calc(100%-1.25rem),calc(100%-2.5rem)_100%,0_100%,0_1.25rem)]`}
     >
       <div
-        className={`flex items-center justify-between text-gray-300 p-4 w-full rounded-sm h-10
+        className={`flex items-center w-full rounded-sm h-10 p-5
         ${isSearchResult ? "bg-[#2a234d]" : "bg-[#241e3e]"}  
         [clip-path:polygon(2.5rem_0,100%_0,100%_calc(100%-1.25rem),calc(100%-2.5rem)_100%,0_100%,0_1.25rem)]`}
       >
         {order.map((key) => (
-          <Fragment key={key}>
-            {key === "Country" && countryCode && (
-              <Flag code={countryCode} className="w-6 h-6 rounded-full object-cover ml-5" />
+          <div
+            key={key}
+            className={`flex-1 text-xs xs:text-sm sm:text-base md:text-base lg:text-base flex items-center text-left pl-4
+              ${key === "Money" ? "text-[#6f5ec3] font-bold" : "text-white"}`}
+          >
+            {key === "Country" && countryCode ? (
+              <div className="flex items-center gap-2 md:pl-4 lg:pl-4">
+                <Flag
+                  code={countryCode}
+                  className="max-[400px]:w-3 max-[400px]:h-3 min-[400px]:w-4 min-[400px]:h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-6 lg:h-6 rounded-full object-cover"
+                />
+                <span>{getDisplayValue(key)}</span>
+              </div>
+            ) : (
+              <span className="text-xs sm:text-base text-left md:pl-4 lg:pl-4 w-full">{getDisplayValue(key)}</span>
             )}
-            <span
-              className={`p-3 font-bold w-full text-start
-                ${key === "Money" ? "text-[#6f5ec3]" : "text-white"} 
-                ${key !== "Country" ? "ml-5" : ""}  
-                ${isSearchResult ? "!text-[#6f5ec3]" : "text-white"}`}
-            >
-              {getDisplayValue(key)}
-            </span>
-          </Fragment>
+          </div>
         ))}
       </div>
     </div>
