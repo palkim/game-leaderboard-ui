@@ -5,6 +5,7 @@ import TableRow from "@ui/row";
 import Search from "@ui/search";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { FaLayerGroup, FaSpinner } from "react-icons/fa";
+import { toast } from "sonner";
 
 import dynamic from "next/dynamic";
 
@@ -56,6 +57,7 @@ const Leaderboard = () => {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       if (!apiUrl) {
         console.error("API URL is not defined");
+        toast.error("API URL is not defined");
         return;
       }
       let url = `${apiUrl}/leaderboard/top-ranking-data`;
@@ -65,14 +67,20 @@ const Leaderboard = () => {
 
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        toast.error("Network response was not ok");
+        return;
       }
       const data = await response.json();
       setData(data.topRankingPlayers);
       setSearchData(data.searchResults ?? null);
-      setNonTop100Data(data.searchResults?.filter((result: SearchData) => result.ranking > 100) ?? null);
+      const nonTop100Data = data.searchResults?.filter((result: SearchData) => result.ranking > 100) ?? null;
+      if (nonTop100Data) {
+        toast.info("Search results found outside the top100 are displayed below the leaderboard");
+      }
+      setNonTop100Data(nonTop100Data);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      toast.error("There was a problem with the fetch operation");
     } finally {
       setLoading(false);
     }
@@ -138,6 +146,7 @@ const Leaderboard = () => {
               rank={item.ranking}
               name={item.playerName}
               country={item.country}
+              countryCode={item.countryCode}
               money={item.money}
               order={items}
               isGrouped={true}

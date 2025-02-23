@@ -2,6 +2,7 @@ import TopNav from "@/app/ui/topnav";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Head from "next/head";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,7 +33,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         [background-size:100%_50%] [background-position:top_center] h-screen`}
       >
         <TopNav />
-        <div className="flex flex-col justify-center items-center min-h-screen w-full">{children}</div>
+        <div className="flex flex-col justify-center items-center min-h-screen w-full">
+          <Toaster richColors position="top-right" closeButton />
+          {children}
+        </div>
       </body>
     </html>
   );

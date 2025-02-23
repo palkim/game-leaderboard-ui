@@ -3,9 +3,9 @@ import Flag from "react-world-flags";
 interface TableRowProps {
   rank: number;
   name: string;
-  country: string | undefined;
+  country: string;
   money: number;
-  countryCode?: string;
+  countryCode: string;
   order: string[];
   isGrouped: boolean;
   isSearchResult: boolean;
@@ -29,6 +29,13 @@ const TableRow: React.FC<TableRowProps> = ({
     return Math.ceil(money * 100) / 100;
   };
 
+  const getTextStyles = (key: string) => {
+    if (key === "Money" || (isSearchResult && (key === "Ranking" || key === "Player Name"))) {
+      return "text-[#6f5ec3] font-bold";
+    }
+    return "text-white";
+  };
+
   return (
     <div
       className={`flex self-center items-center justify-between rounded-sm h-11 bg-[#332a65] p-[0.03125rem] 
@@ -43,12 +50,8 @@ const TableRow: React.FC<TableRowProps> = ({
         {order.map((key) => (
           <div
             key={key}
-            className={`flex-1 text-xs xs:text-sm sm:text-base md:text-base lg:text-base flex items-center text-left pl-4
-              ${
-                key === "Money" || (isSearchResult && (key === "Ranking" || key === "Player Name"))
-                  ? "text-[#6f5ec3] font-bold"
-                  : "text-white"
-              }`}
+            className={`flex-1 flex items-center text-left pl-4 text-xs xs:text-sm sm:text-base md:text-base lg:text-base  
+              ${getTextStyles(key)}`}
           >
             {key === "Country" && countryCode ? (
               <div className="flex items-center gap-2 md:pl-4 lg:pl-4">

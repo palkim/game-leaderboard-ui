@@ -21,9 +21,29 @@ const DraggableCell: React.FC<DraggableCellProps> = ({ id }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
-    transform: CSS.Transform.toString(transform) || undefined,
-    transition: transition || undefined,
+    transform: CSS.Transform.toString(transform) ?? undefined,
+    transition: transition ?? undefined,
     touchAction: "none", // Prevents scrolling while dragging
+  };
+
+  const getColumnTitle = (column: string) => {
+    if (column === "Player Name") {
+      return (
+        <>
+          <span className="block sm:hidden">Name</span>
+          <span className="hidden sm:block">Player Name</span>
+        </>
+      );
+    }
+    if (column === "Ranking") {
+      return (
+        <>
+          <span className="block min-[350px]:hidden">Rank</span>
+          <span className="hidden min-[350px]:block">Ranking</span>
+        </>
+      );
+    }
+    return column;
   };
 
   return (
@@ -34,21 +54,7 @@ const DraggableCell: React.FC<DraggableCellProps> = ({ id }) => {
       {...listeners}
       {...attributes}
     >
-      <span className="text-xs sm:text-base text-left pl-4 w-full">
-        {id === "Player Name" ? (
-          <>
-            <span className="block sm:hidden">Name</span>
-            <span className="hidden sm:block">Player Name</span>
-          </>
-        ) : id === "Ranking" ? (
-          <>
-            <span className="block min-[350px]:hidden">Rank</span>
-            <span className="hidden min-[350px]:block">Ranking</span>
-          </>
-        ) : (
-          id
-        )}
-      </span>
+      <span className="text-xs sm:text-base text-left pl-4 w-full">{getColumnTitle(id)}</span>
       <span className="ml-2 text-gray-500">⋮⋮</span>
     </div>
   );
@@ -78,7 +84,7 @@ const HeaderGroup = ({ items, setItems }: { items: string[]; setItems: (items: s
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-        <div className="flex bg-[#1b172a] rounded-md shadow-lg justify-between w-full pl-5 pr-5">
+        <div className="flex bg-[#1b172a] rounded-md shadow-lg justify-between w-full px-5">
           {items.map((id) => (
             <DraggableCell key={id} id={id} />
           ))}
