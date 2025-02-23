@@ -1,11 +1,14 @@
 "use client";
 
-import HeaderGroup from "@ui/header-group";
 import HeaderRow from "@ui/header-row";
 import TableRow from "@ui/row";
 import Search from "@ui/search";
 import { Fragment, useEffect, useState } from "react";
 import { FaLayerGroup, FaSpinner } from "react-icons/fa";
+
+import dynamic from "next/dynamic";
+
+const HeaderGroup = dynamic(() => import("@ui/header-group"), { ssr: false });
 
 interface LeaderboardData {
   ranking: number;
@@ -40,7 +43,7 @@ interface SearchData {
 const Leaderboard = () => {
   const [query, setQuery] = useState<string | undefined>(undefined);
   const [searchData, setSearchData] = useState<SearchData[] | null>(null);
-  const [nonTop100Data, setNonTop100Data] = useState<LeaderboardData[]>([]);
+  const [nonTop100Data, setNonTop100Data] = useState<SearchData[]>([]);
   const [data, setData] = useState<LeaderboardData[]>([]);
   const [groupedData, setGroupedData] = useState<GroupedLeaderboardData[]>([]);
   const [renderGroups, setRenderGroups] = useState<boolean>(false);
@@ -126,7 +129,17 @@ const Leaderboard = () => {
           <FaSpinner className="animate-spin text-white" />
         </div>
       );
-    } else if (renderGroups) {
+    }
+
+    if (!data.length) {
+      return (
+        <div className="flex items-center justify-center text-white">
+          <span className="text-2xl font-bold">No data available</span>
+        </div>
+      );
+    }
+
+    if (renderGroups) {
       return groupedData.map((group) => (
         <Fragment key={group.groupCountry}>
           <HeaderRow header={group.groupCountry} flagCode={group.groupCountryCode} />
@@ -160,9 +173,12 @@ const Leaderboard = () => {
               isSearchResult={searchData ? searchData.some((searchItem) => searchItem.id === item.id) : false}
             />
           ))}
-          <br />
-          <br />
-          {nonTop100Data.map((item: any) => (
+          {nonTop100Data.length > 0 && (
+            <div className="mt-10 flex items-center justify-center">
+              <span className="text-white text-2xl font-bold">Search Results</span>
+            </div>
+          )}
+          {nonTop100Data.map((item: SearchData) => (
             <div key={item.ranking} className="flex flex-col gap-2">
               {/* Render previous players if available */}
               {item.surroundingPlayers?.prevPlayers && item.surroundingPlayers.prevPlayers.length > 0 && (
