@@ -137,7 +137,7 @@ const Leaderboard = () => {
         </div>
       );
     }
-
+    console.log("renderGroups: ", renderGroups);
     if (renderGroups) {
       return groupedData.map((group) => (
         <Fragment key={group.groupCountry}>
