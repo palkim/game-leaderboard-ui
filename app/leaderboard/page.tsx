@@ -116,6 +116,8 @@ const Leaderboard = () => {
       }));
 
       setGroupedData(groupedDataArray);
+    } else {
+      setGroupedData([]);
     }
   }, [renderGroups, data]);
 
