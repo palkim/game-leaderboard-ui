@@ -44,7 +44,11 @@ const TableRow: React.FC<TableRowProps> = ({
           <div
             key={key}
             className={`flex-1 text-xs xs:text-sm sm:text-base md:text-base lg:text-base flex items-center text-left pl-4
-              ${key === "Money" ? "text-[#6f5ec3] font-bold" : "text-white"}`}
+              ${
+                key === "Money" || (isSearchResult && (key === "Ranking" || key === "Player Name"))
+                  ? "text-[#6f5ec3] font-bold"
+                  : "text-white"
+              }`}
           >
             {key === "Country" && countryCode ? (
               <div className="flex items-center gap-2 md:pl-4 lg:pl-4">

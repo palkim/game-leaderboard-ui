@@ -1,4 +1,4 @@
-import TopNav from "@ui/layout/topnav";
+import TopNav from "@/app/ui/topnav";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Head from "next/head";

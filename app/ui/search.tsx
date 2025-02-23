@@ -1,8 +1,8 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
+import { FaSearch } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function Search({
@@ -32,7 +32,7 @@ export default function Search({
         placeholder={placeholder}
         defaultValue={searchParams.get("query")?.toString()}
       />
-      <MagnifyingGlassIcon
+      <FaSearch
         style={{ color: "#ffff" }}
         className="absolute left-3 top-1/2 h-4 -translate-y-1/2 peer-focus:text-gray-900"
       />

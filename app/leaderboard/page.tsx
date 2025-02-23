@@ -3,7 +3,7 @@
 import HeaderRow from "@ui/header-row";
 import TableRow from "@ui/row";
 import Search from "@ui/search";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { FaLayerGroup, FaSpinner } from "react-icons/fa";
 
 import dynamic from "next/dynamic";
@@ -43,32 +43,48 @@ interface SearchData {
 const Leaderboard = () => {
   const [query, setQuery] = useState<string | undefined>(undefined);
   const [searchData, setSearchData] = useState<SearchData[] | null>(null);
-  const [nonTop100Data, setNonTop100Data] = useState<SearchData[]>([]);
+  const [nonTop100Data, setNonTop100Data] = useState<SearchData[] | null>(null);
   const [data, setData] = useState<LeaderboardData[]>([]);
   const [groupedData, setGroupedData] = useState<GroupedLeaderboardData[]>([]);
   const [renderGroups, setRenderGroups] = useState<boolean>(false);
   const [items, setItems] = useState<string[]>(["Ranking", "Player Name", "Country", "Money"]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("http://localhost:4000/leaderboard/top-ranking-data");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setData(data.topRankingPlayers);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      } finally {
-        setLoading(false);
+  const fetchData = useCallback(async (query?: string) => {
+    setLoading(true);
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (!apiUrl) {
+        console.error("API URL is not defined");
+        return;
       }
-    };
+      let url = `${apiUrl}/leaderboard/top-ranking-data`;
+      if (query) {
+        url += `?query=${query}`;
+      }
 
-    fetchData();
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setData(data.topRankingPlayers);
+      setSearchData(data.searchResults ?? null);
+      setNonTop100Data(data.searchResults?.filter((result: SearchData) => result.ranking > 100) ?? null);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    if (query) {
+      fetchData(query);
+    } else {
+      fetchData();
+    }
+  }, [query, fetchData]);
 
   useEffect(() => {
     if (renderGroups) {
@@ -94,33 +110,6 @@ const Leaderboard = () => {
       setGroupedData(groupedDataArray);
     }
   }, [renderGroups, data]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        let url = "http://localhost:4000/leaderboard/top-ranking-data";
-        if (query) {
-          url = `http://localhost:4000/leaderboard/top-ranking-data?query=${query}`;
-        }
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setData(data.topRankingPlayers);
-        setSearchData(data.searchResults);
-        console.log(data.searchResults);
-        console.log(data.searchResults?.filter((result: SearchData) => result.ranking > 100));
-        setNonTop100Data(data.searchResults?.filter((result: SearchData) => result.ranking > 100) || []);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [query]);
 
   const renderContent = () => {
     if (loading) {
@@ -173,12 +162,12 @@ const Leaderboard = () => {
               isSearchResult={searchData ? searchData.some((searchItem) => searchItem.id === item.id) : false}
             />
           ))}
-          {nonTop100Data.length > 0 && (
+          {nonTop100Data && nonTop100Data.length > 0 && (
             <div className="mt-10 flex items-center justify-center">
               <span className="text-white text-2xl font-bold">Search Results</span>
             </div>
           )}
-          {nonTop100Data.map((item: SearchData) => (
+          {nonTop100Data?.map((item: SearchData) => (
             <div key={item.ranking} className="flex flex-col gap-2">
               {/* Render previous players if available */}
               {item.surroundingPlayers?.prevPlayers && item.surroundingPlayers.prevPlayers.length > 0 && (
