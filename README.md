@@ -1,4 +1,4 @@
-# Panteon Leaderboard
+# Leaderboard
 
 This is a [Next.js](https://nextjs.org) project that provides a leaderboard feature for tracking player rankings. The application is built using modern web technologies and is designed to be responsive and user-friendly.
 
