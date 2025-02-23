@@ -3,7 +3,7 @@
 import HeaderRow from "@ui/header-row";
 import TableRow from "@ui/row";
 import Search from "@ui/search";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaLayerGroup, FaSpinner } from "react-icons/fa";
 import { toast } from "sonner";
 
@@ -114,7 +114,6 @@ const Leaderboard = () => {
             ranking: index + 1,
           })),
       }));
-      console.log("groupedDataArray: ", groupedDataArray);
       setGroupedData(groupedDataArray);
     } else {
       setGroupedData([]);
@@ -137,9 +136,7 @@ const Leaderboard = () => {
         </div>
       );
     }
-    console.log("renderGroups: ", renderGroups);
     if (renderGroups) {
-      console.log("groupedData: ", groupedData);
       return groupedData.map((group) => (
         <>
           <HeaderRow header={group.groupCountry} flagCode={group.groupCountryCode} />
@@ -160,7 +157,6 @@ const Leaderboard = () => {
         </>
       ));
     } else {
-      console.log("data: ", data);
       return (
         <>
           {data.map((item) => (
