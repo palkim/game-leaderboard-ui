@@ -1,3 +1,5 @@
+"use client";
+
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import Flag from "react-world-flags";
