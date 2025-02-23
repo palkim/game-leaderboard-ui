@@ -146,7 +146,7 @@ const Leaderboard = () => {
           {group.rows.map((item) => (
             <TableRow
               playerId={item.id}
-              key={item.ranking}
+              key={item.id}
               rank={item.ranking}
               name={item.playerName}
               country={item.country}
@@ -166,7 +166,7 @@ const Leaderboard = () => {
           {data.map((item) => (
             <TableRow
               playerId={item.id}
-              key={item.ranking}
+              key={item.id}
               rank={item.ranking}
               name={item.playerName}
               country={item.country}
@@ -192,7 +192,7 @@ const Leaderboard = () => {
                     .map((prevPlayer) => (
                       <TableRow
                         playerId={prevPlayer.id}
-                        key={prevPlayer.ranking}
+                        key={prevPlayer.id}
                         rank={prevPlayer.ranking}
                         name={prevPlayer.playerName}
                         country={prevPlayer.country}
@@ -208,6 +208,7 @@ const Leaderboard = () => {
               {/* Render current player */}
               <TableRow
                 playerId={item.id}
+                key={item.id}
                 rank={item.ranking}
                 name={item.playerName}
                 country={item.country}
@@ -223,7 +224,7 @@ const Leaderboard = () => {
                   {item.surroundingPlayers.nextPlayers.map((nextPlayer) => (
                     <TableRow
                       playerId={nextPlayer.id}
-                      key={nextPlayer.ranking}
+                      key={nextPlayer.id}
                       rank={nextPlayer.ranking}
                       name={nextPlayer.playerName}
                       country={nextPlayer.country}
