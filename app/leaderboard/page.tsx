@@ -141,7 +141,7 @@ const Leaderboard = () => {
     if (renderGroups) {
       console.log("groupedData: ", groupedData);
       return groupedData.map((group) => (
-        <Fragment key={group.groupCountry}>
+        <>
           <HeaderRow header={group.groupCountry} flagCode={group.groupCountryCode} />
           {group.rows.map((item) => (
             <TableRow
@@ -157,7 +157,7 @@ const Leaderboard = () => {
               isSearchResult={searchData ? searchData.some((searchItem) => searchItem.id === item.id) : false}
             />
           ))}
-        </Fragment>
+        </>
       ));
     } else {
       console.log("data: ", data);
