@@ -1,10 +1,85 @@
+"use client";
+
+import { toast } from "sonner";
+
 export default function Home() {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const name = formData.get("name") as string;
+    const country = formData.get("country") as string;
+    const countryCode = formData.get("countryCode") as string;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) {
+      console.error("API URL is not defined");
+      toast.error("API URL is not defined");
+      return;
+    }
+    const response = await fetch(`${apiUrl}/player/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        country,
+        countryCode,
+      }),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      toast.error(errorData.error);
+      return;
+    }
+    toast.success(`Player created successfully: ${name}`);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <a href="/leaderboard" className="text-pink-500 hover:text-pink-700">
-          View Leaderboard
-        </a>
+    <div className="min-h-screen p-8 font-[family-name:var(--font-geist-sans)] w-full">
+      <main className="flex justify-between items-start w-full">
+        <div className="flex-1 items-left">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-1/2 p-8">
+            <label htmlFor="name" className="text-white">
+              Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              className="bg-[#241e3e] border border-[#332a65] rounded-md text-white p-2"
+            />
+            <label htmlFor="country" className="text-white">
+              Country:
+            </label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              required
+              className="bg-[#241e3e] border border-[#332a65] rounded-md text-white p-2"
+            />
+            <label htmlFor="countryCode" className="text-white">
+              Country Code:
+            </label>
+            <input
+              type="text"
+              id="countryCode"
+              name="countryCode"
+              required
+              className="bg-[#241e3e] border border-[#332a65] rounded-md text-white p-2"
+            />
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Create Player
+            </button>
+          </form>
+        </div>
+        <div className="flex-1 flex flex-col items-center justify-center h-full">
+          <a href="/leaderboard" className="text-blue-500 hover:text-blue-700 text-center p-20">
+            View Leaderboard
+          </a>
+        </div>
+        <div className="flex-1 items-center justify-center h-full"></div>
       </main>
     </div>
   );

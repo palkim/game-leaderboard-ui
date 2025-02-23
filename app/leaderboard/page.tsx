@@ -13,7 +13,7 @@ const HeaderGroup = dynamic(() => import("@ui/header-group"), { ssr: false });
 
 interface LeaderboardData {
   ranking: number;
-  id?: string;
+  id: string;
   playerName: string;
   country: string;
   money: number;
@@ -142,6 +142,7 @@ const Leaderboard = () => {
           <HeaderRow header={group.groupCountry} flagCode={group.groupCountryCode} />
           {group.rows.map((item) => (
             <TableRow
+              playerId={item.id}
               key={item.ranking}
               rank={item.ranking}
               name={item.playerName}
@@ -160,6 +161,7 @@ const Leaderboard = () => {
         <>
           {data.map((item) => (
             <TableRow
+              playerId={item.id}
               key={item.ranking}
               rank={item.ranking}
               name={item.playerName}
@@ -185,6 +187,7 @@ const Leaderboard = () => {
                     .filter((prevPlayer) => prevPlayer.ranking > 100)
                     .map((prevPlayer) => (
                       <TableRow
+                        playerId={prevPlayer.id}
                         key={prevPlayer.ranking}
                         rank={prevPlayer.ranking}
                         name={prevPlayer.playerName}
@@ -200,6 +203,7 @@ const Leaderboard = () => {
               )}
               {/* Render current player */}
               <TableRow
+                playerId={item.id}
                 rank={item.ranking}
                 name={item.playerName}
                 country={item.country}
@@ -214,6 +218,7 @@ const Leaderboard = () => {
                 <div className="flex flex-col gap-1">
                   {item.surroundingPlayers.nextPlayers.map((nextPlayer) => (
                     <TableRow
+                      playerId={nextPlayer.id}
                       key={nextPlayer.ranking}
                       rank={nextPlayer.ranking}
                       name={nextPlayer.playerName}
