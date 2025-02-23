@@ -139,6 +139,7 @@ const Leaderboard = () => {
     }
     console.log("renderGroups: ", renderGroups);
     if (renderGroups) {
+      console.log("groupedData: ", groupedData);
       return groupedData.map((group) => (
         <Fragment key={group.groupCountry}>
           <HeaderRow header={group.groupCountry} flagCode={group.groupCountryCode} />
@@ -159,6 +160,7 @@ const Leaderboard = () => {
         </Fragment>
       ));
     } else {
+      console.log("data: ", data);
       return (
         <>
           {data.map((item) => (
