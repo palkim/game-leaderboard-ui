@@ -114,7 +114,7 @@ const Leaderboard = () => {
             ranking: index + 1,
           })),
       }));
-
+      console.log("groupedDataArray: ", groupedDataArray);
       setGroupedData(groupedDataArray);
     } else {
       setGroupedData([]);
